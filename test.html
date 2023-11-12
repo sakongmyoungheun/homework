@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body { max-width: 1200px; margin: 0 auto; text-align: center;}
+        #mainphoto { width: 100%; height: 400px; background-color: gold; border-radius: 20px;}
+        #data {margin-top: 50px; width:  300px; height: 100px; background-color: gray; color:white; font-size: 25px; border-radius: 20px; cursor: pointer;}
+        #maindata {margin: 0 auto; }
+        #subdata {margin: 0 auto; margin-top: 50px;}
+        #subdata2 { cursor: pointer; width:  200px; height: 70px; background-color: gray; color:white; font-size: 20px; border-radius: 20px; padding-bottom: 25px;} 
+        ul, li {list-style: none; margin: 0 auto; }
+        ul {display: flex; padding-right: 40px;}
+        li {padding-top: 25px; font-size: 25px; }
+        form {margin: 0 auto;}
+        p {font-size: 20px;}
+    
+    </style>
+</head>
+<body>
+    <h2>공공 데이터 출력과제</h2>
+
+    <div id="mainphoto">사진 첨부 공간</div>
+
+    <button id="data" type="button" onclick="fetchData()">옥천군 소방부서</button>
+
+    <div id="maindata" ></div>
+    <ul id="list" ></ul> 
+    <div id="subdata"></div>
+   
+    
+      
+    <script>
+
+
+
+function fetchData() {
+    return fetch('https://apis.data.go.kr/6430000/eqStatDnYngFrStService/getEqStatDnYngFrSt?serviceKey=%2FkJD49TyAB5cgGqM4X78%2F5hPpfisXOrdNobi1%2FSaEkpwI4LxsuiF%2FrQsJ9NJnpcREHE86W2NoGmUoJQt8oSk3g%3D%3D&currentPage=1&perPage=10')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const bodyData = data.body;
+            console.log(bodyData);  // body 데이터를 콘솔에 출력
+            // 여기서 필요한 작업을 수행하거나 데이터를 활용할 수 있습니다.
+            Category(data.body)
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            throw error;  // 에러를 다시 던져서 호출자에게 전파
+        });
+
+}
+
+function Category(maindata) {
+    const logo =  document.getElementById("maindata")
+    logo.innerHTML = '<h2>부서현황</h2>'
+
+    let category = maindata
+    let key = [];
+    let value = [];
+
+    category.forEach((el, idx) => {
+        key.push(el.SE)
+        value.push(el.EQPMN)
+    });
+
+    
+    const setData = new Set(key)
+    const setData2 = Array.from(setData);
+    console.log(setData2[0]);
+
+    const setData_1 = new Set(value)
+    const setData2_1 = Array.from(setData_1)
+    console.log(setData2_1);
+
+    
+    
+    setData2.forEach(item => {
+        const list = document.getElementById('list')
+        console.log(list);
+        const itemElement = document.createElement('li')
+        itemElement.textContent = `[${item}]`
+        list.appendChild(itemElement)
+    })
+    console.log(category[0].SE);
+   
+function subdata() {
+    const secondlogo = document.getElementById('subdata')
+    secondlogo.innerHTML = '<button id="subdata2">부서별 자산현황</button>'
+    category.forEach(item =>{
+        const tablelist = document.getElementById('subdata')
+        const tableitemElement = document.createElement('p')
+        tableitemElement.textContent = `[${item.SE} - ${item.EQPMN} : ${item.CO}대]`
+        tablelist.appendChild(tableitemElement)
+    })    
+}
+setTimeout(subdata, 3000)
+
+
+
+}
+
+    </script>
+
+</body>
+</html>
