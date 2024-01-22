@@ -183,7 +183,7 @@ Bert는 self-supervised learning 중 하나인 masking 방법을 사용하고 �
 
 ### 3. 단어가 가질수 있는 병합의 조건을 모두 확인한 후 빈도의 비중이 가장 큰 병합을 하나의 글자로 통합
 <p align="center">
-  <img src="https://github.com/sakongmyoungheun/homework/assets/149550142/6bd6574a-1b12-46d3-9b9b-e89772dc92e0" alt="이미지 설명">
+  <img src="https://github.com/sakongmyoungheun/homework/assets/149550142/6bd6574a-1b12-46d3-9b9b-e89772dc92e0" alt="이미지 설명" width="300" height="200">
 </p>
 - 예시: ('a', '##'p', '##'p', '##l', '##e') -> 'ap', 'pp', 'pl', 'le' 중 'ap'가 가장 높은 비중을 차지한다는 가정을 합니다.
 - 업데이트 후 'a', '##'p', '##'p', '##l', '##e' -> 'ap', '##'p', '##l', '##e'
